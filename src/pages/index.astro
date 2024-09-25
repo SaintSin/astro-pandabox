@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Pandabox from "@components/Pandabox.astro";
+import { Icon } from "astro-icon/components";
 ---
 
 <Layout title="PandaBox: An Astro Lightbox and Gallery">
@@ -37,6 +38,11 @@ import Pandabox from "@components/Pandabox.astro";
       <li>close animations</li>
       <li>delay appearance of slide navigation and text</li>
     </ul>
+    <p>
+      <a href="https://github.com/SaintSin/astro-pandabox" target="_blank">
+        <Icon name="carbon:logo-github" />
+      </a>
+    </p>
     <Pandabox galleryid="panda" transitionType="fade" />
   </main>
   <style>
