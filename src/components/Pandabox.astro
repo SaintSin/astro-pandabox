@@ -1,0 +1,247 @@
+---
+import { type CollectionEntry, getEntry } from "astro:content";
+import { Image, Picture } from "astro:assets";
+// Using Astro Icon to provide Iconify icons for naviagtion
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  galleryid: string;
+  gallery?: CollectionEntry<"galleries">;
+  transitionType?: string;
+}
+
+const { galleryid, transitionType } = Astro.props;
+const gallery = await getEntry("galleries", galleryid);
+const images = gallery?.data.images ?? [];
+
+import "@styles/lightbox-fixed.css";
+
+// Adjust the sizes of thumbnail and lightbox images according to requirement.
+---
+
+<section class="thumbnail-container">
+  {
+    images.map((image, index) => (
+      <button class="thumbnail-button" data-index={index}>
+        <Image
+          src={image.src}
+          alt={image.alt}
+          widths={[180, 400, 600]}
+          sizes="(max-width: 260px) 180px, (max-width: 520px) 400px, 600px"
+          quality={40}
+          loading="eager"
+          data-index={index}
+          class="thumbnail"
+        />
+      </button>
+    ))
+  }
+</section>
+<dialog class="lightbox-dialog" data-option={transitionType || "fade"}>
+  <div class="lightbox-content">
+    {
+      images.map((image, index) => (
+        <figure class="lightbox-image-container" id={`image-${index}`}>
+          {/* For performance, only the first few images are eager loaded, if we rely on lazy only there is a glitch on Chromoum browsers as the image is loaded. */}
+          <div class="lightbox-image-wrapper">
+            <Image
+              src={image.src}
+              alt={image.alt}
+              widths={[600, 1200, 1800, 2200]}
+              sizes="(max-width: 520px) 600px, (max-width: 1100px) 1200px, (max-width: 1700px) 1800px, 2200px"
+              quality={40}
+              loading={index < 4 ? "eager" : "lazy"}
+              class="lightbox-image"
+              data-index={index}
+            />
+          </div>
+          <figcaption class="lightbox-caption">
+            {image.title ? (
+              <p>
+                {index + 1}. {image.title}
+              </p>
+            ) : null}
+            {image.description ? <p>{image.description}</p> : null}
+          </figcaption>
+        </figure>
+      ))
+    }
+  </div>
+  <!-- Navigation buttons -->
+  <button class="prev-button" aria-label="previous slide">
+    <Icon name="carbon:previous-filled" />
+  </button>
+  <button class="next-button" aria-label="next slide">
+    <Icon name="carbon:next-filled" />
+  </button>
+  <button class="close-button" aria-label="close button">
+    <Icon name="carbon:close-filled" />
+  </button>
+</dialog>
+
+<!-- <script src="../scripts/debug.ts"></script> -->
+<script src="../scripts/pandabox.ts"></script>
+
+<style>
+  .lightbox-dialog {
+    /* Adjust these custome properties if you like */
+    --zoom-duration: 0.7s; /* Duration of the zoom effect */
+    --transition-duration: 0.5s; /* Duration of slide transition*/
+    --background-transition-duration: 0.9s; /* Duration of lightbox background transition*/
+    --caption-height: 5lh; /* use line height units */
+    /* End of custom properties */
+  }
+  @media (prefers-reduced-motion) {
+    .lightbox-dialog {
+      --zoom-duration: 0s;
+      --transition-duration: 0s;
+      --background-transition-duration: 0s;
+    }
+  }
+  .lightbox-dialog {
+    display: none;
+    border: none;
+    padding: 0;
+    overflow: hidden;
+    background: none;
+    width: 100vw;
+    height: 100dvh;
+    transform: translateX(100%); /* Start off-screen */
+
+    /* Close animation */
+    /* opacity: 0;
+    transition-property: display opacity;
+    transition-duration: 1s;
+    transition-behavior: allow-discrete; */
+
+    &[open] {
+      opacity: 1;
+      max-width: 100%;
+      max-height: 100%;
+      height: 100dvh;
+      display: grid;
+      grid-template-columns: [main-start] 10ch [interior-start] 1fr[interior-end] 10ch [main-end];
+      grid-template-rows: [main-start] 5ch [interior-start] 1fr [interior-end] 5ch [main-end];
+      grid-template-areas:
+        "tlhs top trhs"
+        "clhs content crhs"
+        "blhs bottom brhs";
+      transform: translateX(0); /* Slide in */
+    }
+    &::backdrop {
+      opacity: 0;
+      transition-property: opacity display overlay;
+      transition-delay: 0.1s;
+      transition-duration: var(--background-transition-duration);
+      transition-timing-function: ease;
+      transition-behavior: allow-discrete;
+      background: oklch(40% 0 0 / 100%);
+      /* Blur background if using semi-transparent background */
+      /* backdrop-filter: blur(5px); */
+    }
+  }
+
+  dialog[open]::backdrop {
+    opacity: 1;
+  }
+
+  /* Sudo element requires this syntax for @starting-style */
+  @starting-style {
+    dialog[open]::backdrop {
+      opacity: 0;
+    }
+  }
+  /* Lightbox Content */
+  .lightbox-content {
+    grid-column-start: main-start;
+    grid-column-end: main-end;
+    grid-row-start: main-start;
+    grid-row-end: main-end;
+    width: 100dvw;
+    height: 100dvh;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "content";
+  }
+
+  /* Initial state for the image */
+  .lightbox-image-container {
+    grid-area: content;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr var(--caption-height);
+    grid-template-areas:
+      "image"
+      "caption";
+    place-content: center;
+    opacity: 0;
+    pointer-events: none;
+    /* Slide switch transitions, opacity is used in fade mode, transform in slide */
+    transition:
+      opacity var(--transition-duration) ease-in-out,
+      transform var(--transition-duration) var(--ease-in-out-5); /* Open-props transition to liven it up a bit */
+
+    &.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .lightbox-image-wrapper {
+      grid-area: image;
+    }
+    .lightbox-caption {
+      grid-area: caption;
+      padding: 1ch;
+      /* background: oklch(10% 0 0 / 20%); */
+      /* background-image: linear-gradient(to right, orange 50%, pink 50%); */
+    }
+    .lightbox-image {
+      /* Custom properties, origin and scall are modified by JS  */
+      --initial-scale: 1;
+      --initial-x: 0px;
+      --initial-y: 0px;
+      --final-x: 0px;
+      --final-y: 0px;
+      --final-scale: 1;
+      /* end of custom props */
+      max-height: calc(100dvh - var(--caption-height));
+      width: auto;
+      transform-origin: top left;
+      /* Using Open Props Easing */
+      animation: zoom-animation var(--zoom-duration)
+        var(--ease-elastic-in-out-3) forwards;
+      opacity: 1;
+    }
+  }
+  /* Styling for fade and slide transitions  */
+  .lightbox-dialog[data-option="fade"] .lightbox-image-container {
+    transform: none;
+  }
+
+  .lightbox-dialog[data-option="slide"] .lightbox-image-container {
+    transform: translateX(100%);
+  }
+
+  .lightbox-dialog[data-option="slide"] .lightbox-image-container.previous {
+    transform: translateX(-100%);
+  }
+
+  .lightbox-dialog[data-option="slide"] .lightbox-image-container.next {
+    transform: translateX(100%);
+  }
+
+  .lightbox-dialog[data-option="slide"] .lightbox-image-container.active {
+    transform: translateX(0%);
+  }
+
+  @keyframes zoom-animation {
+    from {
+      transform: translate(var(--initial-x), var(--initial-y))
+        scale(var(--initial-scale));
+    }
+    to {
+      transform: translate(var(--final-x), var(--final-y))
+        scale(var(--final-scale));
+    }
+  }
+</style>

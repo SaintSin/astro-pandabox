@@ -1,16 +1,48 @@
 ---
-
+import Layout from "../layouts/Layout.astro";
+import Pandabox from "@components/Pandabox.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="PandaBox: An Astro Lightbox and Gallery">
+  <main class="surface">
+    <h1>PandaBox</h1>
+    <h2>An Astro Lightbox and Gallery</h2>
+    <p>Features</p>
+    <ul>
+      <li>
+        Uses Content Collections for galleries, including alt text, and optional
+        titles and descriptions.
+      </li>
+      <li>Astro’s Image component for optimisation</li>
+      <li>Modern CSS</li>
+      <li>
+        Slide transitions can be either <i>fade</i> or <i
+          ><a href="/slide/">slide</a></i
+        >.
+      </li>
+    </ul>
+    <p>Using</p>
+    <ul>
+      <li>
+        <a href="https://open-props.style/" target="_blank"> Open Props</a>, in
+        places to make some of the transitions more interesting.
+        <li>
+          <a href="https://www.astroicon.dev/" target="_blank">Astro Icon</a> for
+          ease of changing navigation buttons.
+        </li>
+      </li>
+    </ul>
+    <p>Add</p>
+    <ul>
+      <li>close animations</li>
+      <li>delay appearance of slide navigation and text</li>
+    </ul>
+    <Pandabox galleryid="panda" transitionType="fade" />
+  </main>
+  <style>
+    h1 {
+      font-size: var(--font-size-8);
+      font-weight: var(--font-weight-8);
+    }
+  </style>
+</Layout>

@@ -1,0 +1,36 @@
+---
+const links = [
+  { linkText: "Home", link: "/" },
+  { linkText: "Slide Transition", link: "/slide/" },
+];
+---
+
+<header>
+  <nav class="surface">
+    <ul role="list" aria-label="Main menu">
+      {
+        links.map((link) => (
+          <li>
+            <a href={link.link}>{link.linkText}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>
+<style>
+  ul {
+    padding: 0px;
+    margin: 0px;
+  }
+  li {
+    display: inline-block;
+    & a {
+      padding-inline: var(--size-4);
+      text-decoration: none;
+    }
+    &:first-child a {
+      padding-inline: 0;
+    }
+  }
+</style>

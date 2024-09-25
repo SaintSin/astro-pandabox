@@ -1,0 +1,87 @@
+/* Thumbnails */
+.thumbnail-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: var(--size-7);
+  max-width: 90vw;
+  overflow: hidden;
+}
+
+.thumbnail-button {
+  padding: 0;
+  border: none;
+  outline: none;
+  background: none;
+  cursor: zoom-in;
+
+  &:focus {
+    outline: none;
+  }
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+}
+
+/* Slide caption */
+figcaption p {
+  font-weight: var(--font-weight-2);
+  text-align: center;
+  margin: auto;
+  color: var(--stone-1);
+  text-wrap: pretty;
+}
+/* Image title */
+figcaption p:first-child {
+  font-weight: var(--font-weight-8);
+  padding-block-start: var(--size-5);
+  padding-block-end: var(--size-1);
+}
+
+/* Navigation Buttons */
+.lightbox-dialog {
+  button {
+    z-index: 999;
+    border: none;
+    outline: none;
+    /* Style the SVG  icons*/
+    [data-icon] {
+      color: oklch(60% 0.01 150 / 75%);
+      width: 38px;
+      height: 100%;
+      aspect-ratio: 1 / 1;
+      padding: 0;
+      transition: all 0.2s ease-in-out;
+    }
+    &:hover [data-icon] {
+      color: oklch(85% 0.15 150 / 95%);
+    }
+  }
+}
+/* Navigation Buttons */
+.prev-button,
+.next-button,
+.close-button,
+.fit-to-screen-button {
+  display: block;
+  background: none;
+  cursor: pointer;
+}
+
+.prev-button {
+  grid-area: clhs;
+  padding-right: 50%;
+}
+.next-button {
+  grid-area: crhs;
+  padding-left: 50%;
+}
+.close-button {
+  grid-area: trhs;
+  cursor: zoom-out;
+}
+.fit-to-screen-button {
+  grid-area: brhs;
+  cursor: zoom-out;
+}
