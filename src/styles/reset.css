@@ -10,6 +10,7 @@ html {
   -moz-text-size-adjust: none;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
+  line-height: 1.5;
 }
 
 /* Remove default margin in favour of better control in authored CSS */

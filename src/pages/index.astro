@@ -17,38 +17,34 @@ import { Icon } from "astro-icon/components";
       <li>Astro’s Image component for optimisation</li>
       <li>Modern CSS</li>
       <li>
-        Slide transitions can be either <i>fade</i> or <i
-          ><a href="/slide/">slide</a></i
-        >.
+        Slide transitions can be either <i>fade</i> or
+        <i><a href="/slide/">slide</a></i>.
       </li>
-    </ul>
-    <p>Using</p>
-    <ul>
-      <li>
-        <a href="https://open-props.style/" target="_blank"> Open Props</a>, in
-        places to make some of the transitions more interesting.
-        <li>
-          <a href="https://www.astroicon.dev/" target="_blank">Astro Icon</a> for
-          ease of changing navigation buttons.
-        </li>
-      </li>
-    </ul>
-    <p>Add</p>
-    <ul>
-      <li>close animations</li>
-      <li>delay appearance of slide navigation and text</li>
+      <li>Customised transition easings and timings</li>
+      <li>Touch enabled swiping of slides</li>
+      <li>and adorable pandas!</li>
     </ul>
     <p>
       <a href="https://github.com/SaintSin/astro-pandabox" target="_blank">
-        <Icon name="carbon:logo-github" />
+        <Icon name="carbon:logo-github" /> astro-pandabox
       </a>
     </p>
+    <hr />
+    <h2>Sample Gallery With Pandas</h2>
+    <p>Using a fade transition between slides.</p>
     <Pandabox galleryid="panda" transitionType="fade" />
   </main>
   <style>
     h1 {
-      font-size: var(--font-size-8);
-      font-weight: var(--font-weight-8);
+      font-size: 5rem;
+      font-weight: 800;
+    }
+    h2 {
+      padding-block-end: 3rem;
+    }
+    li {
+      max-width: 35ch;
+      margin-block-end: 0.5rem;
     }
   </style>
 </Layout>

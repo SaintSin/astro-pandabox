@@ -1,8 +1,6 @@
 ---
 import { type CollectionEntry, getEntry } from "astro:content";
-import { Image, Picture } from "astro:assets";
-// Using Astro Icon to provide Iconify icons for naviagtion
-import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
 
 interface Props {
   galleryid: string;
@@ -13,10 +11,6 @@ interface Props {
 const { galleryid, transitionType } = Astro.props;
 const gallery = await getEntry("galleries", galleryid);
 const images = gallery?.data.images ?? [];
-
-import "@styles/lightbox-fixed.css";
-
-// Adjust the sizes of thumbnail and lightbox images according to requirement.
 ---
 
 <section class="thumbnail-container">
@@ -69,88 +63,196 @@ import "@styles/lightbox-fixed.css";
   </div>
   <!-- Navigation buttons -->
   <button class="prev-button" aria-label="previous slide">
-    <Icon name="carbon:previous-filled" />
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+    >
+      <path
+        fill="currentColor"
+        d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2m8 15H11.85l5.58 5.573L16 24l-8-8l8-8l1.43 1.393L11.85 15H24Z"
+      >
+      </path>
+      <path
+        fill="none"
+        d="m16 8l1.43 1.393L11.85 15H24v2H11.85l5.58 5.573L16 24l-8-8z"></path>
+    </svg>
   </button>
   <button class="next-button" aria-label="next slide">
-    <Icon name="carbon:next-filled" />
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+    >
+      <path
+        fill="currentColor"
+        d="M2 16A14 14 0 1 0 16 2A14 14 0 0 0 2 16m6-1h12.15l-5.58-5.607L16 8l8 8l-8 8l-1.43-1.427L20.15 17H8Z"
+      >
+      </path>
+      <path
+        fill="none"
+        d="m16 8l-1.43 1.393L20.15 15H8v2h12.15l-5.58 5.573L16 24l8-8z"></path>
+    </svg>
   </button>
   <button class="close-button" aria-label="close button">
-    <Icon name="carbon:close-filled" />
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+    >
+      <path
+        fill="currentColor"
+        d="M16 2C8.2 2 2 8.2 2 16s6.2 14 14 14s14-6.2 14-14S23.8 2 16 2m5.4 21L16 17.6L10.6 23L9 21.4l5.4-5.4L9 10.6L10.6 9l5.4 5.4L21.4 9l1.6 1.6l-5.4 5.4l5.4 5.4z"
+      >
+      </path>
+    </svg>
   </button>
 </dialog>
 
-<!-- <script src="../scripts/debug.ts"></script> -->
-<script src="../scripts/pandabox.ts"></script>
-
 <style>
+  /* Lightbox Configuration */
   .lightbox-dialog {
-    /* Adjust these custome properties if you like */
-    --zoom-duration: 0.7s; /* Duration of the zoom effect */
-    --transition-duration: 0.5s; /* Duration of slide transition*/
-    --background-transition-duration: 0.9s; /* Duration of lightbox background transition*/
-    --caption-height: 5lh; /* use line height units */
+    /* Adjust these custom properties if you like */
+    --duration-zoom-in: 0.75s; /* Duration of the zoom effect */
+    --duration-background-transition: 0.3s; /* Duration of lightbox background transition*/
+    --duration-slide-transition: 0.3s; /* Duration of slide transition*/
+    --duration-close-transition: 0.3s; /* close*/
+    --caption-height: 5lh; /* use line height units for size of caption area */
+    --ease-zoom: cubic-bezier(0.5, -0.5, 0.1, 1.5);
+    --ease-slide-transition: cubic-bezier(0.9, 0, 0.1, 1);
     /* End of custom properties */
   }
   @media (prefers-reduced-motion) {
+    /* Set  tranistion speed to 0*/
     .lightbox-dialog {
-      --zoom-duration: 0s;
-      --transition-duration: 0s;
-      --background-transition-duration: 0s;
+      --duration-zoom-in: 0s;
+      --duration-slide-transition: 0s;
+      --duration-background-transition: 0s;
+      --duration-close-transition: 0s;
     }
   }
+
+  img,
+  picture {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  /* Prevent interaction with page when modal is open. */
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
+  /* Thumbnails and container, change as required */
+  .thumbnail-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: clamp(1rem, 2vw, 1.5rem);
+    max-width: 90vw;
+    overflow: clip;
+  }
+  .thumbnail-button {
+    padding: 0;
+    border: none;
+    outline: none;
+    background: none;
+    cursor: zoom-in;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  /* Lightbox and children */
+
+  /* Exit State */
+
   .lightbox-dialog {
+    opacity: 0;
     display: none;
     border: none;
     padding: 0;
-    overflow: hidden;
+    overflow: clip;
     background: none;
-    width: 100vw;
+    transform: translateX(100%);
+    /* For exit */
+    transition:
+      overlay 2s ease-in allow-discrete,
+      display 2s ease-in allow-discrete;
+  }
+  /* Open state */
+  .lightbox-dialog[open] {
+    opacity: 1;
+    max-width: 100%;
+    max-height: 100%;
     height: 100dvh;
-    transform: translateX(100%); /* Start off-screen */
-
-    /* Close animation */
-    /* opacity: 0;
-    transition-property: display opacity;
-    transition-duration: 1s;
-    transition-behavior: allow-discrete; */
-
-    &[open] {
-      opacity: 1;
-      max-width: 100%;
-      max-height: 100%;
-      height: 100dvh;
-      display: grid;
-      grid-template-columns: [main-start] 10ch [interior-start] 1fr[interior-end] 10ch [main-end];
-      grid-template-rows: [main-start] 5ch [interior-start] 1fr [interior-end] 5ch [main-end];
-      grid-template-areas:
-        "tlhs top trhs"
-        "clhs content crhs"
-        "blhs bottom brhs";
-      transform: translateX(0); /* Slide in */
-    }
-    &::backdrop {
-      opacity: 0;
-      transition-property: opacity display overlay;
-      transition-delay: 0.1s;
-      transition-duration: var(--background-transition-duration);
-      transition-timing-function: ease;
-      transition-behavior: allow-discrete;
-      background: oklch(40% 0 0 / 100%);
-      /* Blur background if using semi-transparent background */
-      /* backdrop-filter: blur(5px); */
-    }
+    display: grid;
+    grid-template-columns: [main-start] 10ch [interior-start] 1fr[interior-end] 10ch [main-end];
+    grid-template-rows: [main-start] 5ch [interior-start] 1fr [interior-end] 5ch [main-end];
+    /* named grid areas used for navigation positioning */
+    grid-template-areas:
+      "tlhs top trhs"
+      "clhs content crhs"
+      "blhs bottom brhs";
+    transform: translateX(0); /* Slide in */
   }
 
-  dialog[open]::backdrop {
+  /* Before opening  */
+  @starting-style {
+    .lightbox-dialog[open] {
+      translate: 0 100vh;
+    }
+    .lightbox-dialog[open]::backdrop {
+      opacity: 0;
+    }
+    .lightbox-dialog[open]
+      .lightbox-content
+      .lightbox-image-container
+      .lightbox-caption {
+      opacity: 0;
+    }
+    .lightbox-dialog[open] button {
+      opacity: 0;
+    }
+  }
+  /* Open State*/
+  .lightbox-dialog[open]::backdrop {
     opacity: 1;
   }
 
-  /* Sudo element requires this syntax for @starting-style */
+  /* Exit State */
+  .lightbox-dialog::backdrop {
+    opacity: 0;
+    /* transition: opacity var(--duration-background-transition) ease; */
+    background: oklch(40% 0 0 / 95%);
+    /* Blur background if using semi-transparent background */
+    /* backdrop-filter: blur(5px); */
+  }
   @starting-style {
-    dialog[open]::backdrop {
+    .lightbox-dialog[open]::backdrop {
       opacity: 0;
     }
   }
+
+  /* When dialog is closing */
+
+  .lightbox-dialog.closing::backdrop {
+    opacity: 0;
+    transition: opacity var(--duration-close-transition) ease;
+  }
+  .lightbox-dialog.closing {
+    opacity: 0;
+    transition: opacity var(--duration-close-transition) ease;
+  }
+  .closing .active .lightbox-image {
+    /* This needs more work, but gonna ship as is */
+    /* animation: zoom-out-animation var(--duration-close-transition) ease-out
+      forwards;
+    outline: 4px solid red; */
+  }
+
   /* Lightbox Content */
   .lightbox-content {
     grid-column-start: main-start;
@@ -179,8 +281,8 @@ import "@styles/lightbox-fixed.css";
     pointer-events: none;
     /* Slide switch transitions, opacity is used in fade mode, transform in slide */
     transition:
-      opacity var(--transition-duration) ease-in-out,
-      transform var(--transition-duration) var(--ease-in-out-5); /* Open-props transition to liven it up a bit */
+      opacity var(--duration-slide-transition) var(--ease-slide-transition),
+      transform var(--duration-slide-transition) var(--ease-slide-transition); /* Open-props transition to liven it up a bit */
 
     &.active {
       opacity: 1;
@@ -190,6 +292,8 @@ import "@styles/lightbox-fixed.css";
       grid-area: image;
     }
     .lightbox-caption {
+      opacity: 1;
+      transition: opacity var(--duration-background-transition) ease-in;
       grid-area: caption;
       padding: 1ch;
       /* background: oklch(10% 0 0 / 20%); */
@@ -203,16 +307,37 @@ import "@styles/lightbox-fixed.css";
       --final-x: 0px;
       --final-y: 0px;
       --final-scale: 1;
+
       /* end of custom props */
       max-height: calc(100dvh - var(--caption-height));
       width: auto;
       transform-origin: top left;
-      /* Using Open Props Easing */
-      animation: zoom-animation var(--zoom-duration)
-        var(--ease-elastic-in-out-3) forwards;
+      animation: zoom-in-animation var(--duration-zoom-in) var(--ease-zoom)
+        forwards;
       opacity: 1;
     }
   }
+  @keyframes zoom-in-animation {
+    from {
+      transform: translate(var(--initial-x), var(--initial-y))
+        scale(var(--initial-scale));
+    }
+    to {
+      transform: translate(var(--final-x), var(--final-y))
+        scale(var(--final-scale));
+    }
+  }
+  @keyframes zoom-out-animation {
+    from {
+      transform: translate(var(--final-x), var(--final-y))
+        scale(var(--final-scale));
+    }
+    to {
+      transform: translate(var(--initial-x), var(--initial-y))
+        scale(var(--initial-scale));
+    }
+  }
+
   /* Styling for fade and slide transitions  */
   .lightbox-dialog[data-option="fade"] .lightbox-image-container {
     transform: none;
@@ -234,14 +359,371 @@ import "@styles/lightbox-fixed.css";
     transform: translateX(0%);
   }
 
-  @keyframes zoom-animation {
-    from {
-      transform: translate(var(--initial-x), var(--initial-y))
-        scale(var(--initial-scale));
+  /* Slide caption */
+  .lightbox-caption {
+    p {
+      font-weight: 200;
+      text-align: center;
+      margin: auto;
+      color: oklch(95% 0 0);
+      text-wrap: pretty;
     }
-    to {
-      transform: translate(var(--final-x), var(--final-y))
-        scale(var(--final-scale));
+    /* Image title */
+    p:first-child {
+      font-weight: 800;
+      padding-block-start: 1.5rem;
+      padding-block-end: 0.75rem;
     }
   }
+
+  /* Navigation Buttons */
+  .lightbox-dialog {
+    button {
+      z-index: 999;
+      border: none;
+      outline: none;
+      opacity: 1;
+      transition: opacity var(--duration-background-transition) ease-in
+        allow-discrete;
+      /* Style the SVG  icons*/
+      svg {
+        color: oklch(60% 0.01 150 / 75%);
+        width: 38px;
+        height: 100%;
+        aspect-ratio: 1 / 1;
+        padding: 0;
+        transition: all 0.2s ease-in-out;
+      }
+      &:hover svg {
+        color: oklch(85% 0.15 150 / 95%);
+      }
+    }
+  }
+  .prev-button,
+  .next-button,
+  .close-button {
+    display: block;
+    background: none;
+    cursor: pointer;
+  }
+
+  .prev-button {
+    grid-area: clhs;
+    padding-right: 50%;
+  }
+  .next-button {
+    grid-area: crhs;
+    padding-left: 50%;
+  }
+  .close-button {
+    grid-area: trhs;
+    cursor: zoom-out;
+    padding-left: 50%;
+  }
 </style>
+<script>
+  // Types for better type safety
+  interface LightboxElements {
+    thumbnailButtons: NodeListOf<HTMLButtonElement>;
+    lightboxDialog: HTMLDialogElement | null;
+    prevButton: HTMLButtonElement | null;
+    nextButton: HTMLButtonElement | null;
+    closeButton: HTMLButtonElement | null;
+  }
+
+  interface LightboxState {
+    currentIndex: number;
+    resizeTimeout?: number;
+    closeDuration: number;
+    debug: boolean;
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    const thumbnailButtons = document.querySelectorAll<HTMLButtonElement>(
+      ".thumbnail-button img",
+    );
+    const lightboxDialog =
+      document.querySelector<HTMLDialogElement>(".lightbox-dialog");
+    const prevButton =
+      document.querySelector<HTMLButtonElement>(".prev-button");
+    const nextButton =
+      document.querySelector<HTMLButtonElement>(".next-button");
+    const closeButton =
+      document.querySelector<HTMLButtonElement>(".close-button");
+
+    const debug = false; // Enable debug logging
+
+    // Set closeDuration from CSS custom property
+    const closeDuration =
+      parseFloat(
+        getComputedStyle(lightboxDialog!).getPropertyValue(
+          "--duration-close-transition",
+        ),
+      ) * 1000; // Convert seconds to milliseconds
+
+    console.log(closeDuration);
+    let currentIndex = 0;
+    let resizeTimeout: number | undefined;
+
+    function logDebugInfo(
+      action: string,
+      rect?: DOMRect,
+      image?: HTMLImageElement,
+    ): void {
+      if (!debug) return;
+
+      console.log(`Transition: ${lightboxDialog?.getAttribute("data-option")}`);
+      console.log(`Debug Info (${action}):`);
+      if (rect) {
+        console.log(
+          `Thumbnail Position: X=${rect.left}, Y=${rect.top}, Width=${rect.width}, Height=${rect.height}`,
+        );
+      }
+      if (image) {
+        const imgRect = image.getBoundingClientRect();
+        console.log(
+          `Target Image Position: X=${imgRect.left}, Y=${imgRect.top}, Width=${imgRect.width}, Height=${imgRect.height}`,
+        );
+      }
+    }
+
+    function calculateCentering(image: HTMLImageElement): void {
+      const wrapper = image.closest(".lightbox-image-wrapper") as HTMLElement;
+
+      if (!wrapper) {
+        console.error("Image wrapper not found.");
+        return;
+      }
+
+      const wrapperRect = wrapper.getBoundingClientRect();
+      const wrapperWidth = wrapperRect.width;
+      const wrapperHeight = wrapperRect.height;
+
+      if (!wrapperWidth || !wrapperHeight) return;
+
+      const imageWidth = Number.parseFloat(image.getAttribute("width") || "0");
+      const imageHeight = Number.parseFloat(
+        image.getAttribute("height") || "0",
+      );
+
+      if (!imageWidth || !imageHeight) {
+        console.error("Image dimensions are invalid.");
+        return;
+      }
+
+      const imageAspectRatio = imageWidth / imageHeight;
+      const wrapperAspectRatio = wrapperWidth / wrapperHeight;
+
+      let finalX = 0;
+      let finalY = 0;
+
+      if (wrapperAspectRatio > imageAspectRatio) {
+        const targetHeight = wrapperHeight;
+        const targetWidth = targetHeight * imageAspectRatio;
+        finalX = (wrapperWidth - targetWidth) / 2; // Center horizontally
+      } else {
+        const targetWidth = wrapperWidth;
+        const targetHeight = targetWidth / imageAspectRatio;
+        finalY = (wrapperHeight - targetHeight) / 2; // Center vertically
+      }
+
+      finalX = Math.max(0, finalX);
+      finalY = Math.max(0, finalY);
+
+      image.style.setProperty("--final-x", `${finalX}px`);
+      image.style.setProperty("--final-y", `${finalY}px`);
+      image.style.setProperty("--final-scale", `1`);
+    }
+
+    function showImageAtIndex(index: number): void {
+      const lightboxImageContainers = document.querySelectorAll<HTMLElement>(
+        ".lightbox-image-container",
+      );
+
+      if (index < 0 || index >= lightboxImageContainers.length) return;
+
+      for (const container of lightboxImageContainers) {
+        container.classList.remove("active", "previous", "next");
+      }
+
+      const newActiveImage = document.getElementById(`image-${index}`);
+      if (newActiveImage) {
+        newActiveImage.classList.add("active");
+        currentIndex = index;
+
+        const image =
+          newActiveImage.querySelector<HTMLImageElement>(".lightbox-image");
+        if (image) {
+          logDebugInfo("Image Loaded", undefined, image);
+          calculateCentering(image);
+        }
+
+        const prevIndex =
+          (currentIndex - 1 + lightboxImageContainers.length) %
+          lightboxImageContainers.length;
+        const nextIndex = (currentIndex + 1) % lightboxImageContainers.length;
+
+        const prevImage = document.getElementById(`image-${prevIndex}`);
+        const nextImage = document.getElementById(`image-${nextIndex}`);
+
+        prevImage?.classList.add("previous");
+        nextImage?.classList.add("next");
+      } else {
+        console.error(`Image container with id image-${index} not found.`);
+      }
+    }
+
+    function openLightbox(button: HTMLButtonElement): void {
+      if (!lightboxDialog) return;
+
+      const rect = button.getBoundingClientRect();
+      const index = Number.parseInt(button.dataset.index || "0", 10);
+
+      const activeImage = document.getElementById(`image-${index}`);
+      if (activeImage) {
+        activeImage.classList.add("active");
+        lightboxDialog.showModal();
+        currentIndex = index;
+
+        requestAnimationFrame(() => {
+          const lightboxWrapper = activeImage.querySelector<HTMLDivElement>(
+            ".lightbox-image-wrapper",
+          );
+
+          if (!lightboxWrapper) {
+            console.error("Lightbox wrapper not found.");
+            return;
+          }
+
+          const wrapperRect = lightboxWrapper.getBoundingClientRect();
+          if (wrapperRect.width === 0 || wrapperRect.height === 0) {
+            console.error("Lightbox image wrapper has zero dimensions.");
+            return;
+          }
+
+          const lightboxImage =
+            activeImage.querySelector<HTMLImageElement>(".lightbox-image");
+          if (lightboxImage) {
+            const buttonAspectRatio = rect.width / rect.height;
+            const wrapperAspectRatio = wrapperRect.width / wrapperRect.height;
+
+            const initialScale =
+              buttonAspectRatio > wrapperAspectRatio
+                ? rect.width / wrapperRect.width
+                : rect.height / wrapperRect.height;
+
+            lightboxImage.style.setProperty("--initial-x", `${rect.left}px`);
+            lightboxImage.style.setProperty("--initial-y", `${rect.top}px`);
+            lightboxImage.style.setProperty(
+              "--initial-scale",
+              `${initialScale}`,
+            );
+
+            logDebugInfo("Thumbnail Clicked", rect);
+
+            if (lightboxDialog.getAttribute("data-option") !== "slide") {
+              calculateCentering(lightboxImage);
+            }
+
+            showImageAtIndex(currentIndex);
+          }
+        });
+      }
+    }
+
+    function showPreviousImage(): void {
+      const prevIndex =
+        (currentIndex - 1 + thumbnailButtons.length) % thumbnailButtons.length;
+      showImageAtIndex(prevIndex);
+    }
+
+    function showNextImage(): void {
+      const nextIndex = (currentIndex + 1) % thumbnailButtons.length;
+      showImageAtIndex(nextIndex);
+    }
+
+    function handleKeydown(event: KeyboardEvent): void {
+      if (!lightboxDialog || !lightboxDialog.open) return;
+
+      if (event.key === "ArrowLeft") {
+        showPreviousImage();
+      } else if (event.key === "ArrowRight") {
+        showNextImage();
+      } else if (event.key === "Escape") {
+        event.preventDefault(); // Prevent the default action (closing the dialog)
+        closeDialog(); // Call custom close function
+      }
+    }
+
+    function applyCenteringToAllImages(): void {
+      const lightboxImages =
+        document.querySelectorAll<HTMLImageElement>(".lightbox-image");
+      lightboxImages.forEach(calculateCentering);
+    }
+
+    function handleSwipe(event: TouchEvent): void {
+      const touchStartX = event.touches[0].clientX;
+
+      function handleTouchEnd(touchEndEvent: TouchEvent): void {
+        const touchEndX = touchEndEvent.changedTouches[0].clientX;
+        const deltaX = touchEndX - touchStartX;
+
+        if (deltaX > 50) {
+          showPreviousImage();
+        } else if (deltaX < -50) {
+          showNextImage();
+        }
+        document.removeEventListener("touchend", handleTouchEnd);
+      }
+      document.addEventListener("touchend", handleTouchEnd);
+    }
+    // Function to close the dialog
+    // Do not execute .close() until after transitions have completed
+    function closeDialog() {
+      if (lightboxDialog) {
+        lightboxDialog.classList.add("closing"); // Add class for transition
+        // Get the current timestamp when closing starts
+        const startTime = Date.now();
+
+        // Delay the actual closing of the dialog
+        setTimeout(() => {
+          lightboxDialog.close(); // Close the dialog after transition
+          lightboxDialog.classList.remove("closing"); // Clean up class
+
+          // Calculate and log the duration
+          const endTime = Date.now();
+          const duration = endTime - startTime;
+          console.log(`Dialog closing transition duration: ${duration} ms`);
+        }, closeDuration);
+      }
+    }
+
+    // Attach event listeners
+    for (const button of thumbnailButtons) {
+      button.addEventListener("click", () => openLightbox(button));
+    }
+    prevButton?.addEventListener("click", showPreviousImage);
+    nextButton?.addEventListener("click", showNextImage);
+    closeButton?.addEventListener("click", closeDialog);
+    document.addEventListener("keydown", handleKeydown);
+    document.addEventListener("touchstart", handleSwipe);
+
+    // Handle centering on resize with debouncing
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = window.setTimeout(applyCenteringToAllImages, 300);
+    });
+
+    // Clean up classes on dialog close event
+    lightboxDialog?.addEventListener("close", () => {
+      const lightboxImageContainers = document.querySelectorAll<HTMLElement>(
+        ".lightbox-image-container",
+      );
+
+      // Clean up active classes
+      for (const container of lightboxImageContainers) {
+        container.classList.remove("active", "previous", "next");
+      }
+    });
+  });
+</script>

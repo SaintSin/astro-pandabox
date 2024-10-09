@@ -73,13 +73,22 @@ import "@styles/reset.css";
   body {
     background: var(--stone-1) !important;
     color: var(--gray-11);
+    font-size: var(--font-size-3);
     font-family: var(--font-sans);
+    line-height: 1.5;
     min-height: 100dvh;
     display: grid;
     grid-template-rows: auto 1fr auto;
   }
   p {
     max-width: var(--maxchars);
+  }
+  p,
+  li {
+    margin-block-end: var(--size-2);
+  }
+  ul {
+    margin-block-start: 0px;
   }
 
   .grid {
@@ -105,5 +114,12 @@ import "@styles/reset.css";
   h1,
   h2 {
     font-family: Comfortaa, sans-serif;
+  }
+  .thumbnail-container {
+    padding-block-start: var(--size-10);
+  }
+  hr {
+    width: 50%;
+    margin-block: 5rem;
   }
 </style>

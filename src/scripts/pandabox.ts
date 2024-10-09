@@ -1,7 +1,7 @@
 // Using astro:page-load listener to handle ViewTransitions, otherwise use DOMContentLoaded
 document.addEventListener("astro:page-load", () => {
   const thumbnailButtons = document.querySelectorAll<HTMLButtonElement>(
-    ".thumbnail-button img"
+    ".thumbnail-button img",
   );
   const lightboxDialog =
     document.querySelector<HTMLDialogElement>(".lightbox-dialog");
@@ -17,7 +17,7 @@ document.addEventListener("astro:page-load", () => {
   function logDebugInfo(
     action: string,
     rect?: DOMRect,
-    image?: HTMLImageElement
+    image?: HTMLImageElement,
   ) {
     if (debug) {
       console.log("Transition ", lightboxDialog?.getAttribute("data-option"));
@@ -25,13 +25,13 @@ document.addEventListener("astro:page-load", () => {
       console.log(`Debug Info (${action}):`);
       if (rect) {
         console.log(
-          `Thumbnail Position: X=${rect.left}, Y=${rect.top}, Width=${rect.width}, Height=${rect.height}`
+          `Thumbnail Position: X=${rect.left}, Y=${rect.top}, Width=${rect.width}, Height=${rect.height}`,
         );
       }
       if (image) {
         const imgRect = image.getBoundingClientRect();
         console.log(
-          `Target Image Position: X=${imgRect.left}, Y=${imgRect.top}, Width=${imgRect.width}, Height=${imgRect.height}`
+          `Target Image Position: X=${imgRect.left}, Y=${imgRect.top}, Width=${imgRect.width}, Height=${imgRect.height}`,
         );
       }
     }
@@ -98,7 +98,7 @@ document.addEventListener("astro:page-load", () => {
 
   function showImageAtIndex(index: number) {
     const lightboxImageContainers = document.querySelectorAll<HTMLElement>(
-      ".lightbox-image-container"
+      ".lightbox-image-container",
     );
 
     if (index < 0 || index >= lightboxImageContainers.length) return;
@@ -159,7 +159,7 @@ document.addEventListener("astro:page-load", () => {
       // Use requestAnimationFrame to ensure layout is updated before calculating dimensions
       requestAnimationFrame(() => {
         const lightboxWrapper = activeImage.querySelector<HTMLDivElement>(
-          ".lightbox-image-wrapper"
+          ".lightbox-image-wrapper",
         );
 
         if (lightboxWrapper) {
@@ -190,7 +190,7 @@ document.addEventListener("astro:page-load", () => {
             lightboxImage.style.setProperty("--initial-y", `${rect.top}px`);
             lightboxImage.style.setProperty(
               "--initial-scale",
-              `${initialScale}`
+              `${initialScale}`,
             );
 
             logDebugInfo("Thumbnail Clicked", rect);
@@ -243,7 +243,7 @@ document.addEventListener("astro:page-load", () => {
   if (lightboxDialog) {
     lightboxDialog.addEventListener("close", () => {
       const lightboxImageContainers = document.querySelectorAll<HTMLElement>(
-        ".lightbox-image-container"
+        ".lightbox-image-container",
       );
       for (const container of lightboxImageContainers) {
         container.classList.remove("active");
