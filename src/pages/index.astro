@@ -16,11 +16,12 @@ import { Icon } from "astro-icon/components";
       </li>
       <li>Astro’s Image component for optimisation</li>
       <li>Modern CSS</li>
+      <li>Customised transition easings and timings, via CSS</li>
+
       <li>
         Slide transitions can be either <i>fade</i> or
         <i><a href="/slide/">slide</a></i>.
       </li>
-      <li>Customised transition easings and timings</li>
       <li>Touch enabled swiping of slides</li>
       <li>and adorable pandas!</li>
     </ul>
@@ -45,6 +46,11 @@ import { Icon } from "astro-icon/components";
     li {
       max-width: 35ch;
       margin-block-end: 0.5rem;
+    }
+    ul {
+      max-width: 80ch;
+      columns: 2;
+      column-gap: 3ch;
     }
   </style>
 </Layout>
