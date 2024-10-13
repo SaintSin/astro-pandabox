@@ -1,20 +1,20 @@
 # Pandabox: A Lightbox and Gallery Component for Astro
 
-This is intended to be a added to your exisiting Astro site.
+This is intended to be added to an exisiting Astro site.
 
 - Uses Content Collections for galleries, including alt text, and optional titles and descriptions.
 - Astro’s Image component for optimisation
 - Dependency free
 - Modern CSS
 - Customised transition easings and timings, via CSS
-- Slide transitions can be either fade or slide.
-- Touch enabled swiping of slides
+- Slide transitions can be either fade or slide-in.
+- Touch-enabled swiping of slides
 
 ## Usage
 
 Place `Pandabox.astro` in the components folder
 
-If you have an existing content config file update it to include the content definiton.
+If you have an existing content config file update it to include the content definition.
 
 ```typescript
 const galleries = defineCollection({
@@ -73,10 +73,25 @@ The galleries are stored in JSON files within `content/galleries`
 
 Note: @images this is an [alias](https://docs.astro.build/en/guides/imports/#aliases) used for the image folder.
 
-Import the `Pandabox.astro` component in your page, and then on the place it on the page `<Pandabox galleryid="panda" transitionType="fade" />`
+Import the `Pandabox.astro` component, and place it on the page:
+`<Pandabox galleryid="panda" transitionType="fade" />`
 
-`galleryid` references the name of the JSON file in the `content/galleries/` folder. The transitionType can be either _fade_ or _slide_.
+`galleryid` references the name of the JSON file in the `content/galleries/` folder. The transitionType can be either _fade_ or _slide-in_.
 
-# Lazy vs eager loading in component; css options, use grid or whatever you like for 
+CSS custom properties control some of the lightbox behaviour, allowing for easy customisation.
 
+```css
+.lightbox-dialog {
+  /* Adjust these custom properties if you like */
+  --duration-zoom-in: 1.2s; /* Duration of the zoom effect */
+  --duration-background-transition: 0.5s; /* Duration of lightbox background transition*/
+  --duration-slide-transition: 0.5s; /* Duration of slide transition*/
+  --duration-close-transition: 0.75s; /* close*/
+  --caption-height: 5lh; /* use line height units for size of caption area */
+  --ease-zoom: cubic-bezier(0.5, -0.5, 0.1, 1.5);
+  --ease-slide-transition: cubic-bezier(0.9, 0, 0.1, 1);
+}
+```
+
+If you find this useful please give me the repo a star, or consider supporting my caffeine habbit.
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/X8X714JIO0)

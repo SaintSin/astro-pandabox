@@ -123,7 +123,6 @@ const images = gallery?.data.images ?? [];
     --caption-height: 5lh; /* use line height units for size of caption area */
     --ease-zoom: cubic-bezier(0.5, -0.5, 0.1, 1.5);
     --ease-slide-transition: cubic-bezier(0.9, 0, 0.1, 1);
-    /* End of custom properties */
   }
   @media (prefers-reduced-motion) {
     /* Set  tranistion speed to 0*/
@@ -226,7 +225,6 @@ const images = gallery?.data.images ?? [];
   /* Exit State */
   .lightbox-dialog::backdrop {
     opacity: 0;
-    /* transition: opacity var(--duration-background-transition) ease; */
     background: oklch(40% 0 0 / 95%);
     /* Blur background if using semi-transparent background */
     /* backdrop-filter: blur(5px); */
@@ -238,7 +236,6 @@ const images = gallery?.data.images ?? [];
   }
 
   /* When dialog is closing */
-
   .lightbox-dialog.closing::backdrop {
     opacity: 0;
     transition: opacity var(--duration-close-transition) ease;
