@@ -1,7 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Pandabox from "@components/Pandabox.astro";
-import { Icon } from "astro-icon/components";
 ---
 
 <Layout title="PandaBox: An Astro Lightbox and Gallery">
@@ -15,9 +14,9 @@ import { Icon } from "astro-icon/components";
         titles and descriptions.
       </li>
       <li>Astro’s Image component for optimisation</li>
+      <li>Dependecy free</li>
       <li>Modern CSS</li>
       <li>Customised transition easings and timings, via CSS</li>
-
       <li>
         Slide transitions can be either <i>fade</i> or
         <i><a href="/slide/">slide</a></i>.
@@ -25,11 +24,7 @@ import { Icon } from "astro-icon/components";
       <li>Touch enabled swiping of slides</li>
       <li>and adorable pandas!</li>
     </ul>
-    <p>
-      <a href="https://github.com/SaintSin/astro-pandabox" target="_blank">
-        <Icon name="carbon:logo-github" /> astro-pandabox
-      </a>
-    </p>
+
     <hr />
     <h2>Sample Gallery With Pandas</h2>
     <p>Using a fade transition between slides.</p>
@@ -51,6 +46,10 @@ import { Icon } from "astro-icon/components";
       max-width: 80ch;
       columns: 2;
       column-gap: 3ch;
+    }
+    p,
+    li {
+      text-wrap: pretty;
     }
   </style>
 </Layout>

@@ -1,47 +1,82 @@
-# Astro Starter Kit: Minimal
+# Pandabox: A Lightbox and Gallery Component for Astro
 
-```sh
-npm create astro@latest -- --template minimal
+This is intended to be a added to your exisiting Astro site.
+
+- Uses Content Collections for galleries, including alt text, and optional titles and descriptions.
+- Astro’s Image component for optimisation
+- Dependency free
+- Modern CSS
+- Customised transition easings and timings, via CSS
+- Slide transitions can be either fade or slide.
+- Touch enabled swiping of slides
+
+## Usage
+
+Place `Pandabox.astro` in the components folder
+
+If you have an existing content config file update it to include the content definiton.
+
+```typescript
+const galleries = defineCollection({
+  type: "data",
+  schema: ({ image }) =>
+    z.object({
+      images: z.array(
+        z.object({
+          src: image(),
+          alt: z.string(),
+          title: z.string(),
+          description: z.string(),
+        }),
+      ),
+    }),
+});
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+and include it in your export
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```typescript
+export const collections = {
+  <!-- other collections here -->
+  galleries: galleries,
+};
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+If you do not have any content collections, then add `config.ts` to a folder `src/content`
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+The galleries are stored in JSON files within `content/galleries`
 
-Any static assets, like images, can be placed in the `public/` directory.
+```json
+{
+  "images": [
+    {
+      "src": "@images/pandas/panda-01.jpg",
+      "alt": "A cute panda munching on bamboo",
+      "title": "Bamboo Lover",
+      "description": "Pandas can eat up to 38 kilograms (84 pounds) of bamboo a day!"
+    },
+    {
+      "src": "@images/pandas/panda-02.jpg",
+      "alt": "A panda resting peacefully",
+      "title": "Sleepy Panda",
+      "description": "Pandas spend 12-16 hours a day eating, and the rest of the time they are usually sleeping."
+    },
+    {
+      "src": "@images/pandas/panda-03.jpg",
+      "alt": "A curious panda exploring its surroundings",
+      "title": "Exploring Panda",
+      "description": "Pandas have a great sense of smell, which helps them detect food and other pandas."
+    }
+  ]
+}
+```
 
-## 🧞 Commands
+Note: @images this is an [alias](https://docs.astro.build/en/guides/imports/#aliases) used for the image folder.
 
-All commands are run from the root of the project, from a terminal:
+Import the `Pandabox.astro` component in your page, and then on the place it on the page `<Pandabox galleryid="panda" transitionType="fade" />`
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+`galleryid` references the name of the JSON file in the `content/galleries/` folder. The transitionType can be either _fade_ or _slide_.
 
-## 👀 Want to learn more?
+# Lazy vs eager loading in component; css options, use grid or whatever you like for 
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/X8X714JIO0)

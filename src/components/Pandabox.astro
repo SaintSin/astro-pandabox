@@ -119,7 +119,7 @@ const images = gallery?.data.images ?? [];
     --duration-zoom-in: 0.75s; /* Duration of the zoom effect */
     --duration-background-transition: 0.3s; /* Duration of lightbox background transition*/
     --duration-slide-transition: 0.3s; /* Duration of slide transition*/
-    --duration-close-transition: 0.3s; /* close*/
+    --duration-close-transition: 0.5s; /* close*/
     --caption-height: 5lh; /* use line height units for size of caption area */
     --ease-zoom: cubic-bezier(0.5, -0.5, 0.1, 1.5);
     --ease-slide-transition: cubic-bezier(0.9, 0, 0.1, 1);
@@ -137,6 +137,7 @@ const images = gallery?.data.images ?? [];
 
   img,
   picture {
+    display: block;
     width: 100%;
     height: auto;
     object-fit: cover;
@@ -421,8 +422,10 @@ const images = gallery?.data.images ?? [];
     padding-left: 50%;
   }
 </style>
+
 <script>
-  // Types for better type safety
+  // Types for better type
+  // This can me moved to an external .ts file.
   interface LightboxElements {
     thumbnailButtons: NodeListOf<HTMLButtonElement>;
     lightboxDialog: HTMLDialogElement | null;
@@ -440,7 +443,7 @@ const images = gallery?.data.images ?? [];
 
   document.addEventListener("astro:page-load", () => {
     const thumbnailButtons = document.querySelectorAll<HTMLButtonElement>(
-      ".thumbnail-button img",
+      ".thumbnail-button img"
     );
     const lightboxDialog =
       document.querySelector<HTMLDialogElement>(".lightbox-dialog");
@@ -457,8 +460,8 @@ const images = gallery?.data.images ?? [];
     const closeDuration =
       parseFloat(
         getComputedStyle(lightboxDialog!).getPropertyValue(
-          "--duration-close-transition",
-        ),
+          "--duration-close-transition"
+        )
       ) * 1000; // Convert seconds to milliseconds
 
     console.log(closeDuration);
@@ -468,7 +471,7 @@ const images = gallery?.data.images ?? [];
     function logDebugInfo(
       action: string,
       rect?: DOMRect,
-      image?: HTMLImageElement,
+      image?: HTMLImageElement
     ): void {
       if (!debug) return;
 
@@ -476,13 +479,13 @@ const images = gallery?.data.images ?? [];
       console.log(`Debug Info (${action}):`);
       if (rect) {
         console.log(
-          `Thumbnail Position: X=${rect.left}, Y=${rect.top}, Width=${rect.width}, Height=${rect.height}`,
+          `Thumbnail Position: X=${rect.left}, Y=${rect.top}, Width=${rect.width}, Height=${rect.height}`
         );
       }
       if (image) {
         const imgRect = image.getBoundingClientRect();
         console.log(
-          `Target Image Position: X=${imgRect.left}, Y=${imgRect.top}, Width=${imgRect.width}, Height=${imgRect.height}`,
+          `Target Image Position: X=${imgRect.left}, Y=${imgRect.top}, Width=${imgRect.width}, Height=${imgRect.height}`
         );
       }
     }
@@ -503,7 +506,7 @@ const images = gallery?.data.images ?? [];
 
       const imageWidth = Number.parseFloat(image.getAttribute("width") || "0");
       const imageHeight = Number.parseFloat(
-        image.getAttribute("height") || "0",
+        image.getAttribute("height") || "0"
       );
 
       if (!imageWidth || !imageHeight) {
@@ -537,7 +540,7 @@ const images = gallery?.data.images ?? [];
 
     function showImageAtIndex(index: number): void {
       const lightboxImageContainers = document.querySelectorAll<HTMLElement>(
-        ".lightbox-image-container",
+        ".lightbox-image-container"
       );
 
       if (index < 0 || index >= lightboxImageContainers.length) return;
@@ -587,7 +590,7 @@ const images = gallery?.data.images ?? [];
 
         requestAnimationFrame(() => {
           const lightboxWrapper = activeImage.querySelector<HTMLDivElement>(
-            ".lightbox-image-wrapper",
+            ".lightbox-image-wrapper"
           );
 
           if (!lightboxWrapper) {
@@ -616,7 +619,7 @@ const images = gallery?.data.images ?? [];
             lightboxImage.style.setProperty("--initial-y", `${rect.top}px`);
             lightboxImage.style.setProperty(
               "--initial-scale",
-              `${initialScale}`,
+              `${initialScale}`
             );
 
             logDebugInfo("Thumbnail Clicked", rect);
@@ -717,7 +720,7 @@ const images = gallery?.data.images ?? [];
     // Clean up classes on dialog close event
     lightboxDialog?.addEventListener("close", () => {
       const lightboxImageContainers = document.querySelectorAll<HTMLElement>(
-        ".lightbox-image-container",
+        ".lightbox-image-container"
       );
 
       // Clean up active classes
