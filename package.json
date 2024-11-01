@@ -24,9 +24,9 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
-    "@iconify-json/carbon": "^1.2.3",
-    "@playform/compress": "^0.1.4",
-    "astro": "^4.16.2",
+    "@iconify-json/carbon": "^1.2.4",
+    "@playform/compress": "^0.1.6",
+    "astro": "^4.16.8",
     "astro-icon": "^1.1.1",
     "open-props": "^1.7.7",
     "sharp": "^0.33.5",
