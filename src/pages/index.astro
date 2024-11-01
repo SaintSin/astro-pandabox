@@ -51,5 +51,13 @@ import Pandabox from "@components/Pandabox.astro";
     li {
       text-wrap: pretty;
     }
+    @media (width <= 640px) {
+      h1 {
+        font-size: 3rem;
+      }
+      ul {
+        columns: 1;
+      }
+    }
   </style>
 </Layout>
