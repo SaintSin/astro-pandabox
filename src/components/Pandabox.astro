@@ -178,9 +178,19 @@ const images = gallery?.data.images ?? [];
     background: none;
     transform: translateX(100%);
     /* For exit */
+
     transition:
-      overlay 2s ease-in allow-discrete,
-      display 2s ease-in allow-discrete;
+      overlay 1s ease-in allow-discrete,
+      display 1s ease-in allow-discrete;
+  }
+  @media (width <= 640px) {
+    /* Set to zero for mobile for now */
+
+    .lightbox-dialog {
+      transition:
+        overlay 0s ease-in allow-discrete,
+        display 0s ease-in allow-discrete;
+    }
   }
   /* Open state */
   .lightbox-dialog[open] {
