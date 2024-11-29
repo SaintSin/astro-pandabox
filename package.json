@@ -1,7 +1,7 @@
 {
   "name": "astro-pandabox",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A lightbox/gallery component for Astro, using content collections, optimised images and modern CSS",
   "author": {
     "name": "StJohn Mackay"
