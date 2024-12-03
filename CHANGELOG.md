@@ -9,4 +9,4 @@
 
 ### Added
 
-- Add class "gallery" and an ID to the gallery container
+- Add class "gallery" and an ID to the gallery container.
