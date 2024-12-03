@@ -2,6 +2,7 @@
 
 This is intended to be added to an exisiting Astro site.
 
+- Astro version 5+
 - Uses Content Collections for galleries, including alt text, and optional titles and descriptions.
 - Astro’s Image component for optimisation
 - Dependency free
@@ -18,7 +19,7 @@ If you have an existing content config file update it to include the content def
 
 ```typescript
 const galleries = defineCollection({
-  type: "data",
+  loader: glob({ pattern: "*.json", base: "src/content/galleries" }),
   schema: ({ image }) =>
     z.object({
       images: z.array(
