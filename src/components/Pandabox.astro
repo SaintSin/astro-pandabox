@@ -16,7 +16,11 @@ const images = gallery?.data.images ?? [];
 <section class="thumbnail-container gallery" id={"gallery-" + galleryid}>
   {
     images.map((image, index) => (
-      <button class="thumbnail-button" data-index={index}>
+      <button
+        class="thumbnail-button"
+        data-index={index}
+        aria-label={`View image ${index + 1}: ${image.alt}`}
+      >
         <Image
           src={image.src}
           alt={image.alt}
