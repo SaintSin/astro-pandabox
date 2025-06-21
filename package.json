@@ -1,7 +1,7 @@
 {
   "name": "astro-pandabox",
   "type": "module",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A lightbox/gallery component for Astro, using content collections, optimised images and modern CSS",
   "author": {
     "name": "StJohn Mackay"
@@ -12,7 +12,8 @@
     "astro-component",
     "lightbox",
     "gallery",
-    "lightweight"
+    "lightweight",
+    "responsive images"
   ],
   "scripts": {
     "dev": "astro dev",
@@ -24,9 +25,9 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
-    "@iconify-json/carbon": "^1.2.9",
+    "@iconify-json/carbon": "^1.2.10",
     "@playform/compress": "^0.2.0",
-    "astro": "^5.9.2",
+    "astro": "^5.10.0",
     "astro-icon": "^1.1.5",
     "open-props": "^1.7.15",
     "sharp": "^0.34.2",

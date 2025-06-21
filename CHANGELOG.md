@@ -16,3 +16,9 @@
 ### Upgrade to Astro 5
 
 - Covers changes to content collection to use Content Layer API, the config file is now content.config.ts
+
+## 0.0.4
+
+### Upgrade to Astro 5.10 Responsive images
+
+- Use responsive images, constrained for thumbnails and full-width for slides.

@@ -11,6 +11,7 @@ interface Props {
 const { galleryid, transitionType } = Astro.props;
 const gallery = await getEntry("galleries", galleryid);
 const images = gallery?.data.images ?? [];
+// Change image width for thumbnails as required
 ---
 
 <section class="thumbnail-container gallery" id={"gallery-" + galleryid}>
@@ -24,8 +25,8 @@ const images = gallery?.data.images ?? [];
         <Image
           src={image.src}
           alt={image.alt}
-          widths={[180, 400, 600]}
-          sizes="(max-width: 260px) 180px, (max-width: 520px) 400px, 600px"
+          layout="constrained"
+          width={300}
           quality={40}
           loading="eager"
           data-index={index}
@@ -44,8 +45,7 @@ const images = gallery?.data.images ?? [];
               <Image
                 src={image.src}
                 alt={image.alt}
-                widths={[600, 1200, 1800, 2200]}
-                sizes="(max-width: 520px) 600px, (max-width: 1100px) 1200px, (max-width: 1700px) 1800px, 2200px"
+                layout="full-width"
                 quality={40}
                 loading={index < 4 ? "eager" : "lazy"}
                 class="lightbox-image"
