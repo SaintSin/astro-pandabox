@@ -12,8 +12,8 @@ export default defineConfig({
   },
   integrations: [
     icon(),
-    (await import("@playform/compress")).default({
-      CSS: false,
+    playformCompress({
+      CSS: true,
       HTML: true,
       Image: false,
       JavaScript: true,
