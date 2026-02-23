@@ -1,0 +1,66 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const links = [
+  { linkText: 'Home', link: '/' },
+  { linkText: 'Slide-in Transition', link: '/slide/' },
+];
+---
+
+<header>
+  <nav class="surface">
+    <ul role="list" aria-label="Main menu">
+      {
+        links.map((link) => (
+          <li>
+            <a href={link.link}>{link.linkText}</a>
+          </li>
+        ))
+      }
+    </ul>
+    <a
+      href="https://github.com/SaintSin/astro-pandabox"
+      target="_blank"
+      aria-label="Repositry for Pandabox on Github"
+    >
+      <Icon name="carbon:logo-github" />
+    </a>
+  </nav>
+</header>
+<style>
+  nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  ul {
+    margin: 0px;
+    padding: 0px;
+  }
+  li {
+    display: inline-block;
+    & a {
+      padding-inline: var(--size-4);
+      padding-block: var(--size-3);
+      text-decoration: none;
+    }
+    &:first-child a {
+      padding-inline-start: 0;
+    }
+  }
+  [data-icon] {
+    font-size: 2rem;
+  }
+  a {
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+    &:hover {
+      opacity: 0.2;
+    }
+  }
+  @media (width <= 640px) {
+    li a {
+      padding-inline: var(--size-2);
+    }
+  }
+</style>

@@ -1,0 +1,77 @@
+{
+  "images": [
+    {
+      "src": "@images/pandas/panda-01.jpg",
+      "alt": "A cute panda munching on bamboo",
+      "title": "Bamboo Lover",
+      "description": "Pandas can eat up to 38 kilograms (84 pounds) of bamboo a day!"
+    },
+    {
+      "src": "@images/pandas/panda-02.jpg",
+      "alt": "Two pandas resting peacefully",
+      "title": "Sleepy Pandas",
+      "description": "Pandas spend 12-16 hours a day eating, and the rest of the time they are usually sleeping."
+    },
+    {
+      "src": "@images/pandas/panda-03.jpg",
+      "alt": "A curious panda exploring its surroundings",
+      "title": "Exploring Panda",
+      "description": "Pandas have a great sense of smell, which helps them detect food and other pandas."
+    },
+    {
+      "src": "@images/pandas/panda-04.jpg",
+      "alt": "A panda climbing a tree",
+      "title": "Tree Climber",
+      "description": "Despite their weight, pandas are excellent climbers and can scale trees effortlessly."
+    },
+    {
+      "src": "@images/pandas/panda-05.jpg",
+      "alt": "A playful panda rolling in the grass",
+      "title": "Playful Panda",
+      "description": "Pandas love to play and roll around; they have a playful nature, especially as cubs."
+    },
+    {
+      "src": "@images/pandas/panda-06.jpg",
+      "alt": "A panda sitting peacefully",
+      "title": "Sitting in Style",
+      "description": "Pandas sit in an upright position while eating, a behavior not seen in many other animals."
+    },
+    {
+      "src": "@images/pandas/panda-07.jpg",
+      "alt": "A panda with a serene look",
+      "title": "Gentle Giant",
+      "description": "Pandas are generally solitary and peaceful animals, spending their days in quiet forests."
+    },
+    {
+      "src": "@images/pandas/panda-13.jpg",
+      "alt": "A panda munching on bamboo",
+      "title": "The Bamboo Diet",
+      "description": "Although pandas belong to the bear family, 99% of their diet consists of bamboo!"
+    },
+    {
+      "src": "@images/pandas/panda-11.jpg",
+      "alt": "A panda relaxing under a tree",
+      "title": "A Relaxing Moment",
+      "description": "Pandas are known for their relaxed and easy-going behavior, spending much of their time lounging."
+    },
+    {
+      "src": "@images/pandas/panda-09.jpg",
+      "alt": "A panda looking thoughtful",
+      "title": "A Solitary Life",
+      "description": "Pandas are solitary animals and prefer to live alone, except during the mating season."
+    },
+    {
+      "src": "@images/pandas/panda-10.jpg",
+      "alt": "A panda drinking water",
+      "title": "Thirsty Panda",
+      "description": "While pandas primarily eat bamboo, they need to drink water from nearby streams or rivers daily."
+    },
+
+    {
+      "src": "@images/pandas/panda-12.jpg",
+      "alt": "A panda cub climbing a branch",
+      "title": "Adventurous Cub",
+      "description": "Panda cubs are extremely playful and adventurous, often climbing trees and exploring their environment."
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "images": [
+    {
+      "src": "@images/jwst/52259221868_3d2963c1fe_o.jpg",
+      "alt": "Young Stars in Early Stages of Formation",
+      "title": "Carina Nebula",
+      "description": "Young Stars in Early Stages of Formation. The Carina Nebula is one of the largest star-forming regions in space."
+    },
+    {
+      "src": "@images/jwst/52692932279_6606876271_o.jpg",
+      "alt": "Galaxy",
+      "title": "Nearby Galaxy NGC 1365",
+      "description": "NGC 1365 is a barred spiral galaxy located 56 million light-years away in the constellation Fornax."
+    },
+    {
+      "src": "@images/jwst/52638633506_cfc0083021_o.jpg",
+      "alt": "Space Nebula",
+      "title": "Chamaeleon I cloud",
+      "description": "The Chamaeleon I cloud is a star-forming region in the southern hemisphere."
+    },
+    {
+      "src": "@images/jwst/52211586681_1e95f5ec38_o.jpg",
+      "alt": "Stefan’s Quintet",
+      "title": "Stefan’s Quintet",
+      "description": "This compact group of five galaxies is known for dramatic interactions between its members."
+    },
+    {
+      "src": "@images/jwst/53361000972_340f599081_o.jpg",
+      "alt": "Herbig Haro",
+      "title": "Herbig Haro object 797 (HH 797)",
+      "description": "Herbig Haro objects are small patches of nebulosity associated with newly born stars."
+    },
+    {
+      "src": "@images/jwst/Herbig_Haro_HH_797_53361000972_340f599081_o.jpg",
+      "alt": "Herbig Haro",
+      "title": "Herbig Haro object 797 (HH 797) II",
+      "description": "Herbig Haro objects are formed when jets of gas ejected by young stars collide with surrounding gas and dust."
+    }
+  ]
+}

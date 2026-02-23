@@ -1,0 +1,49 @@
+{
+  "name": "astro-pandabox",
+  "type": "module",
+  "version": "0.0.5",
+  "description": "A lightbox/gallery component for Astro, using content collections, optimised images and modern CSS",
+  "author": {
+    "name": "StJohn Mackay"
+  },
+  "license": "MIT",
+  "keywords": [
+    "astro",
+    "astro-component",
+    "lightbox",
+    "gallery",
+    "lightweight",
+    "responsive images"
+  ],
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "format": "biome format --write .",
+    "lint": "biome lint --write .",
+    "check": "biome check --write .",
+    "prettier": "prettier . --write",
+    "clean": "rm -rf dist .astro",
+    "type-check": "astro check",
+    "test": "astro check && biome check src/components src/layouts src/pages src/types *.mjs *.json"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.6",
+    "@iconify-json/carbon": "^1.2.18",
+    "@playform/compress": "^0.2.1",
+    "astro": "^5.17.3",
+    "astro-icon": "^1.1.5",
+    "open-props": "^1.7.23",
+    "sharp": "^0.34.5",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.4",
+    "postcss-jit-props": "^1.0.16",
+    "prettier": "^3.8.1",
+    "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-css-order": "^2.2.0"
+  }
+}

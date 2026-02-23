@@ -1,0 +1,13 @@
+---
+import Lightbox from '@components/Pandabox.astro';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Welcome to Astro.">
+  <main class="surface">
+    <h1>Lightbox with Slide-in Transition</h1>
+    <p>Using transitionType="slide".</p>
+    <!-- <code> &lt;Lightbox galleryid="jwst" transitionType="slide" /&gt; </code> -->
+    <Lightbox galleryid="panda" transitionType="slide" />
+  </main>
+</Layout>

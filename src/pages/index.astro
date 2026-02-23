@@ -1,0 +1,63 @@
+---
+import Pandabox from '@components/Pandabox.astro';
+import Layout from '@layouts/Layout.astro';
+---
+
+<Layout title="PandaBox: An Astro Lightbox and Gallery">
+  <main class="surface">
+    <h1>PandaBox</h1>
+    <h2>An Astro Lightbox and Gallery</h2>
+    <p>Features</p>
+    <ul>
+      <li>Updated for Astro v5</li>
+      <li>
+        Uses Content Collections for galleries, including alt text, and optional
+        titles and descriptions.
+      </li>
+      <li>Astro’s Image component for optimisation</li>
+      <li>Dependency free</li>
+      <li>Modern CSS</li>
+      <li>Customised transition easings and timings, via CSS</li>
+      <li>
+        Slide transitions can be either <i>fade</i> or
+        <i><a href="/slide/">slide-in</a></i>.
+      </li>
+      <li>Touch enabled swiping of slides</li>
+      <li>and adorable pandas!</li>
+    </ul>
+    <hr />
+    <h2>Sample Gallery With Pandas</h2>
+    <p>Using a fade transition between slides.</p>
+    <Pandabox galleryid="panda" transitionType="fade" />
+  </main>
+  <style>
+    h1 {
+      font-weight: 800;
+      font-size: 5rem;
+    }
+    h2 {
+      padding-block-end: 3rem;
+    }
+    li {
+      margin-block-end: 0.5rem;
+      max-width: 35ch;
+    }
+    ul {
+      column-gap: 3ch;
+      columns: 2;
+      max-width: 80ch;
+    }
+    p,
+    li {
+      text-wrap: pretty;
+    }
+    @media (width <= 640px) {
+      h1 {
+        font-size: 3rem;
+      }
+      ul {
+        columns: 1;
+      }
+    }
+  </style>
+</Layout>

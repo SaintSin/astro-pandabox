@@ -1,0 +1,136 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import Footer from '@components/Footer.astro';
+import Header from '@components/Header.astro';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+import '@styles/reset.css';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="PandaBox: An Astro Lightbox and Gallery"
+    />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="preload"
+      href="/fonts/Comfortaa-VariableFont_wght.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" /><!-- 180×180 -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <meta name="generator" content={Astro.generator} />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta
+      property="og:description"
+      content="PandaBox: An Astro Lightbox and Gallery"
+    />
+    <meta
+      property="og:image"
+      content={canonicalURL + 'images/pandabox-og-card.png'}
+    />
+    <meta
+      property="og:image:alt"
+      content="Illustration of a panda holding a torch."
+    />
+    <title>{title}</title>
+    <ClientRouter />
+  </head>
+  <body>
+    <Header />
+    <slot />
+    <Footer />
+  </body>
+</html>
+<style is:global>
+  /* the props */
+  :root {
+    --gap: var(--size-fluid-2);
+    --maxchars: 75ch;
+  }
+  @font-face {
+    src: local('Comfortaa'), url('/fonts/Comfortaa-VariableFont_wght.woff2');
+    font-family: Comfortaa;
+    font-display: swap;
+  }
+  body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    background: var(--stone-1);
+    min-height: 100dvh;
+    color: var(--gray-11);
+    font-size: var(--font-size-3);
+    line-height: 1.5;
+    font-family: var(--font-sans);
+  }
+  p {
+    max-width: var(--maxchars);
+  }
+  p,
+  li {
+    margin-block-end: var(--size-2);
+  }
+  ul {
+    margin-block-start: 0px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 0.25fr repeat(3, 1fr) 0.25fr;
+    gap: var(--gap);
+  }
+  .surface {
+    margin-inline: auto;
+    width: 80%;
+    max-width: 1200px;
+  }
+  footer {
+    margin-block-start: var(--size-fluid-4);
+    background: var(--stone-5);
+    padding-block: var(--size-fluid-2);
+  }
+  header {
+    margin-block-end: var(--size-fluid-4);
+    background: var(--stone-5);
+    padding-block: var(--size-fluid-2);
+  }
+  h1,
+  h2 {
+    font-family: Comfortaa, sans-serif;
+  }
+  .thumbnail-container {
+    padding-block-start: var(--size-10);
+  }
+  hr {
+    margin-block: var(--size-6);
+    width: 50%;
+  }
+  @media (width <= 640px) {
+    .surface {
+      width: 90%;
+    }
+    hr {
+      margin-block: var(--size-4);
+    }
+  }
+</style>
