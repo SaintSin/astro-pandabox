@@ -1,6 +1,5 @@
 // @ts-check
 
-import playformCompress from '@playform/compress';
 import { defineConfig } from 'astro/config';
 import icon from 'astro-icon';
 
@@ -10,14 +9,5 @@ export default defineConfig({
   devToolbar: {
     enabled: false,
   },
-  integrations: [
-    icon(),
-    (await import('@playform/compress')).default({
-      CSS: false,
-      HTML: true,
-      Image: false,
-      JavaScript: true,
-      SVG: true,
-    }),
-  ],
+  integrations: [icon()],
 });

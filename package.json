@@ -32,7 +32,6 @@
   "dependencies": {
     "@astrojs/check": "^0.9.6",
     "@iconify-json/carbon": "^1.2.18",
-    "@playform/compress": "^0.2.1",
     "astro": "^5.18.0",
     "astro-icon": "^1.1.5",
     "open-props": "^1.7.23",
