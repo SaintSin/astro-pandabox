@@ -31,10 +31,11 @@
 
 ## 0.0.6
 
-### Astro 6 Preparation
+### Upgrade to Astro 6
 
-- Removed `sharp` dependency - not required in Astro 6 and causes upgrade issues
-- Updated `content.config.ts` to use new Content Layer API with `glob()` loader
-- Uses `astro/loaders` for file-based content loading
-- Schema pattern updated for Astro 6 compatibility
-- Prepared for upcoming Astro 6 migration
+- Upgraded to Astro 6 with new Content Layer API
+- Removed `sharp` dependency - not required in Astro 6
+- Updated `content.config.ts` to use new `glob()` loader from `astro/loaders`
+- Schema now uses callback pattern: `schema: ({ image }) => z.object(...)`
+- Imports Zod from `astro/zod` instead of external package
+- Content collections auto-validate with new runtime validation

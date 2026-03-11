@@ -2,14 +2,58 @@
 
 This is intended to be added to an exisiting Astro site.
 
-- Astro version 5+
-- Uses Content Collections for galleries, including alt text, and optional titles and descriptions.
+- Astro version 6+
+- Uses Content Collections with new Content Layer API for galleries
 - Astro’s Image component for optimisation
 - Dependency free
 - Modern CSS
 - Customised transition easings and timings, via CSS
 - Slide transitions can be either fade or slide-in.
 - Touch-enabled swiping of slides
+
+## Upgrading to Astro 6
+
+### Key Changes
+
+1. **Remove `sharp` dependency** - Not needed in Astro 6 clean installs
+
+```bash
+npm remove sharp
+```
+
+1. **Update `src/content/config.ts`** - Use new Content Layer API with `glob()` loader:
+   - Import `glob` from `astro/loaders` (not `astro/content`)
+   - Import Zod from `astro/zod`
+   - Use callback pattern for schema: `schema: ({ image }) => z.object(...)`
+
+### Migration Example
+
+Before (Astro 5):
+```typescript
+import { defineCollection, z } from "astro:content";
+```
+
+After (Astro 6):
+```typescript
+import { defineCollection } from "astro:content";
+import { glob } from "astro/loaders";
+import { z } from "astro/zod";
+```
+
+The schema definition now uses a callback:
+```typescript
+const galleries = defineCollection({
+  loader: glob({ pattern: ‘*.json’, base: ‘src/content/galleries’ }),
+  schema: ({ image }) => z.object({
+    images: z.array(z.object({
+      src: image(),
+      alt: z.string(),
+      title: z.string(),
+      description: z.string(),
+    })),
+  }),
+});
+```
 
 ## Usage
 
