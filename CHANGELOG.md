@@ -28,3 +28,13 @@
 ### Changed
 
 - Debug console logging now only appears in development mode, not in production builds
+
+## 0.0.6
+
+### Astro 6 Preparation
+
+- Removed `sharp` dependency - not required in Astro 6 and causes upgrade issues
+- Updated `content.config.ts` to use new Content Layer API with `glob()` loader
+- Uses `astro/loaders` for file-based content loading
+- Schema pattern updated for Astro 6 compatibility
+- Prepared for upcoming Astro 6 migration
