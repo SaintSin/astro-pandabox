@@ -30,12 +30,11 @@
     "test": "astro check && biome check src/components src/layouts src/pages src/types *.mjs *.json"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.6",
+    "@astrojs/check": "^0.9.7",
     "@iconify-json/carbon": "^1.2.19",
-    "astro": "^5.18.0",
+    "astro": "^6.0.2",
     "astro-icon": "^1.1.5",
     "open-props": "^1.7.23",
-    "sharp": "^0.34.5",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
