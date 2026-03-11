@@ -36,7 +36,6 @@ import { defineCollection, z } from "astro:content";
 After (Astro 6):
 ```typescript
 import { defineCollection } from "astro:content";
-import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 ```
 
