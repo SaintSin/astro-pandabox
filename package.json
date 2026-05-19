@@ -30,17 +30,18 @@
     "test": "astro check && biome check src/components src/layouts src/pages src/types *.mjs *.json"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.7",
-    "@iconify-json/carbon": "^1.2.19",
-    "astro": "^6.0.2",
+    "@astrojs/check": "^0.9.9",
+    "@iconify-json/carbon": "^1.2.21",
+    "astro": "^6.3.5",
+    "sharp": "^0.34.5",
     "astro-icon": "^1.1.5",
     "open-props": "^1.7.23",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.6",
+    "@biomejs/biome": "2.4.15",
     "postcss-jit-props": "^1.0.16",
-    "prettier": "^3.8.1",
+    "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-css-order": "^2.2.0"
   }
