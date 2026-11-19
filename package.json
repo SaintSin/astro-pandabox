@@ -1,7 +1,7 @@
 {
   "name": "astro-pandabox",
   "type": "module",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "A lightbox/gallery component for Astro, using content collections, optimised images and modern CSS",
   "author": {
     "name": "StJohn Mackay"
@@ -30,11 +30,11 @@
     "test": "astro check && biome check src/components src/layouts src/pages src/types *.mjs *.json"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.9",
-    "@iconify-json/carbon": "^1.2.21",
-    "astro": "^6.3.5",
-    "sharp": "^0.34.5",
-    "astro-icon": "^1.1.5",
+    "@astrojs/check": "^0.9.12",
+    "@iconify-json/carbon": "^1.2.30",
+    "astro": "^7.4.13",
+    "sharp": "^0.35.5",
+    "astro-icon": "^1.2.0",
     "open-props": "^1.7.23",
     "typescript": "^6.0.3"
   },

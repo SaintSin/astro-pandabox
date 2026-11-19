@@ -1,8 +1,8 @@
 # Pandabox: A Lightbox and Gallery Component for Astro
 
-This is intended to be added to an exisiting Astro site.
+This is intended to be added to an existing Astro site.
 
-- Astro version 6+
+- Astro version 6 or 7 (currently tested with Astro 7.4)
 - Uses Content Collections with new Content Layer API for galleries
 - Astro’s Image component for optimisation
 - Dependency free
@@ -10,6 +10,18 @@ This is intended to be added to an exisiting Astro site.
 - Customised transition easings and timings, via CSS
 - Slide transitions can be either fade or slide-in.
 - Touch-enabled swiping of slides
+
+## Upgrading to Astro 7
+
+Pandabox needs no code changes for Astro 7: `Pandabox.astro`, `content.config.ts` and the galleries work as they are. This was checked on Astro 7.4.13 by type-checking, building, and opening, navigating and closing the lightbox in a browser.
+
+### Key Changes
+
+1. **Node.js 22.23.4 or newer** - what the current Astro 7.4 releases require (Astro 7.0 needed 22.12)
+2. **Upgrade the Astro packages together** - for example `@astrojs/check`, and if you deploy to Netlify, `@astrojs/netlify` 8, the adapter line that supports Astro 7
+3. **Align `sharp`** - Astro 7 installs its own copy (`^0.35`). If you pin `sharp` yourself, use 0.35 or remove the pin
+
+Astro 7 also changes some defaults that can affect a site: Vite 8, a Rust-based compiler, `compressHTML: 'jsx'`, Sätteri as the default Markdown processor, advanced routing enabled by default, and the removal of deprecated `astro:transitions` APIs. See the [Astro changelog](https://github.com/withastro/astro/blob/main/packages/astro/CHANGELOG.md) for details.
 
 ## Upgrading to Astro 6
 
@@ -42,7 +54,7 @@ import { z } from "astro/zod";
 The schema definition now uses a callback:
 ```typescript
 const galleries = defineCollection({
-  loader: glob({ pattern: ‘*.json’, base: ‘src/content/galleries’ }),
+  loader: glob({ pattern: '*.json', base: 'src/content/galleries' }),
   schema: ({ image }) => z.object({
     images: z.array(z.object({
       src: image(),
