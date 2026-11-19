@@ -48,3 +48,11 @@
 - Requires Node.js 22.23.4 or newer, which the current Astro 7.4 releases need
 - Aligned `sharp` with the range Astro 7 bundles (`^0.35.5`); updated `@astrojs/check`, `astro-icon` and `@iconify-json/carbon`
 - README: added upgrade notes for Astro 7, and fixed curly quotes in the Astro 6 code example that broke copy and paste
+
+## 0.0.8
+
+### Dependency updates
+
+- Biome 2.4.15 to 2.6.8: configs migrated (`$schema` and `recommended` to `preset`). Its new rules flagged `public/favicon.svg` for having no `<title>`, so one was added, and Biome now formats the code samples in Markdown, which tidied the README examples (quotes and blank lines only)
+- `prettier-plugin-astro` 0.14 to 1.1.2. It formats `.astro` files differently (line breaking only), so the `prettier` script will now reformat several files; nothing runs it automatically
+- TypeScript stays on **6.0.3, pinned exactly**. TypeScript 7 was tried and `astro check` refuses it ("does not currently support TypeScript 7.0"), which would fail every build, since `build` is `astro check && astro build`

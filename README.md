@@ -41,28 +41,34 @@ npm remove sharp
 ### Migration Example
 
 Before (Astro 5):
+
 ```typescript
-import { defineCollection, z } from "astro:content";
+import { defineCollection, z } from 'astro:content';
 ```
 
 After (Astro 6):
+
 ```typescript
-import { defineCollection } from "astro:content";
-import { z } from "astro/zod";
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 ```
 
 The schema definition now uses a callback:
+
 ```typescript
 const galleries = defineCollection({
   loader: glob({ pattern: '*.json', base: 'src/content/galleries' }),
-  schema: ({ image }) => z.object({
-    images: z.array(z.object({
-      src: image(),
-      alt: z.string(),
-      title: z.string(),
-      description: z.string(),
-    })),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      images: z.array(
+        z.object({
+          src: image(),
+          alt: z.string(),
+          title: z.string(),
+          description: z.string(),
+        }),
+      ),
+    }),
 });
 ```
 
